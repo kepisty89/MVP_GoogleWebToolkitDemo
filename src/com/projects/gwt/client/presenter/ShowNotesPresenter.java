@@ -9,7 +9,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.projects.gwt.client.DbStorageService;
-import com.projects.gwt.client.presenter.AddNotePresenter.Display;
+import com.projects.gwt.client.event.AddNoteEvent;
 
 /**
  * Presenter class for displaying all notes.
@@ -67,7 +67,7 @@ public class ShowNotesPresenter implements Presenter {
 		ClickHandler showNotesClickHandler = new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {
-				localEventBus.fireEvent(new AddNoteEvent());		
+				localEventBus.fireEvent(new AddNoteEvent());
 			}
 		};
 		
