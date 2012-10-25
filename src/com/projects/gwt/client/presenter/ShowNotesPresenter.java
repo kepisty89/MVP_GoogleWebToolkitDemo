@@ -1,7 +1,5 @@
 package com.projects.gwt.client.presenter;
 
-import java.util.List;
-
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -9,7 +7,7 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.projects.gwt.client.DbStorageService;
-import com.projects.gwt.client.event.AddNoteEvent;
+import com.projects.gwt.client.event.*;
 
 /**
  * Presenter class for displaying all notes.
@@ -41,10 +39,7 @@ public class ShowNotesPresenter implements Presenter {
 	 */
 	public interface Display {
 		HasClickHandlers getAddNoteButton();
-		Widget asWidget();
-		
-		// Fake database data.
-		void setData(List<String> data);
+		Widget asWidget();		
 	}
 
 	/**  
@@ -64,14 +59,14 @@ public class ShowNotesPresenter implements Presenter {
 	private void bind(){
 		
 		// TODO: Replace with ClickHandler factory.
-		ClickHandler showNotesClickHandler = new ClickHandler() {		
+		ClickHandler addNoteClickHandler = new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {
 				localEventBus.fireEvent(new AddNoteEvent());
 			}
 		};
 		
-		display.getAddNoteButton().addClickHandler(showNotesClickHandler);
+		display.getAddNoteButton().addClickHandler(addNoteClickHandler);
 	}
 
 }

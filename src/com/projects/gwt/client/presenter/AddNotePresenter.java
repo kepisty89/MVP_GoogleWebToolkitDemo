@@ -7,7 +7,8 @@ import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.projects.gwt.client.DbStorageService;
-import com.projects.gwt.client.event.ShowNotesEvent;
+import com.projects.gwt.client.event.*;
+import com.projects.gwt.shared.model.Note;
 
 /**
  * Presenter class for adding new note.
@@ -39,6 +40,7 @@ public class AddNotePresenter implements Presenter {
 	 */
 	public interface Display {
 		HasClickHandlers getShowNotesButton();
+		HasClickHandlers getSaveNoteButton();
 		Widget asWidget();
 	}
 
@@ -62,9 +64,20 @@ public class AddNotePresenter implements Presenter {
 			@Override
 			public void onClick(ClickEvent event) {
 				localEventBus.fireEvent(new ShowNotesEvent());		
-			}
+			}			
+		};
+				
+		ClickHandler saveNoteClickHandler = new ClickHandler() {		
+			@Override
+			public void onClick(ClickEvent event) {
+				Note note = new Note();
+				note.setTitle("new note");				
+				storage.addNote(note);
+				localEventBus.fireEvent(new SaveNoteEvent());		
+			}			
 		};
 		
 		display.getShowNotesButton().addClickHandler(showNotesClickHandler);
+		display.getSaveNoteButton().addClickHandler(saveNoteClickHandler);
 	}
 }

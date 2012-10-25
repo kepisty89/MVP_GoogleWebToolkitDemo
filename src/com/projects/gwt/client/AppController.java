@@ -5,10 +5,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
-import com.projects.gwt.client.event.AddNoteEvent;
-import com.projects.gwt.client.event.AddNoteEventHandler;
-import com.projects.gwt.client.event.ShowNotesEvent;
-import com.projects.gwt.client.event.ShowNotesEventHandler;
+import com.projects.gwt.client.event.*;
 import com.projects.gwt.client.presenter.AddNotePresenter;
 import com.projects.gwt.client.presenter.Presenter;
 import com.projects.gwt.client.presenter.ShowNotesPresenter;
@@ -31,6 +28,8 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 	private final static String SHOW_NOTES = "showNotes";
 	private final static String ADD_NOTE = "addNote";
+	private final static String SAVE_NOTE = "saveNote";
+	
 
 	/**
 	 * Constructor.
@@ -52,7 +51,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		this.container = container;
 
 		if ("".equals(History.getToken())) {
-			History.newItem(SHOW_NOTES);
+			History.newItem(ADD_NOTE);
 		} else {
 			History.fireCurrentHistoryState();
 		}
@@ -68,7 +67,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			
 			Presenter presenter = null;
 			
-			if (token.equals(SHOW_NOTES)) 
+			if (token.equals(SHOW_NOTES) || token.equals(SAVE_NOTE)) 
 			{			
 				presenter = new ShowNotesPresenter(eventBus, dbStorage, new AllNotesView());			
 			} 
@@ -105,10 +104,18 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			public void onShowNotes(ShowNotesEvent showEvent) {
 				doShowNotes();				
 			}
-		});					
+		});			
+
+		eventBus.addHandler(SaveNoteEvent.TYPE, new SaveNoteEventHandler() {
+			
+			@Override
+			public void onSaveNote(SaveNoteEvent saveEvent) {
+				doSaveNote();				
+			}
+		});	
 	}
 	
-	// Adding items to history. 
+	// Adding items to history.
 	
 	private void doAddNote(){
 		History.newItem(ADD_NOTE);
@@ -118,5 +125,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 		History.newItem(SHOW_NOTES);
 	}
 	
-	
+	private void doSaveNote(){
+		History.newItem(SAVE_NOTE);
+	}		
 }

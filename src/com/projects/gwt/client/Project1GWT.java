@@ -9,18 +9,19 @@ public class Project1GWT implements EntryPoint {
 	/**
 	 * Public methods.
 	 **/
+	@Override
 	public void onModuleLoad() {
-				
+
 		// Main MVP event bus.
 		HandlerManager eventBus = new HandlerManager(null);
-		
-		// Fake database. 
+
+		// Fake database.
 		DbStorageService storage = new DbStorageService();
-		
+
 		// Other dependencies, services goes here.
-	    AppController appController = new AppController(storage, eventBus);
-	    	   
-	    appController.go(RootPanel.get());
+		AppController appController = new AppController(storage, eventBus);
+
+		appController.go(RootPanel.get());
 	}
-	
+
 }
