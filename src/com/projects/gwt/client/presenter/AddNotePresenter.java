@@ -66,7 +66,8 @@ public class AddNotePresenter implements Presenter {
 				localEventBus.fireEvent(new ShowNotesEvent());		
 			}			
 		};
-				
+		
+		// TODO: Replace with ClickHandler factory.
 		ClickHandler saveNoteClickHandler = new ClickHandler() {		
 			@Override
 			public void onClick(ClickEvent event) {

@@ -3,10 +3,9 @@ package com.projects.gwt.client.view;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DockPanel;
+import com.google.gwt.user.client.ui.Grid;
 import com.google.gwt.user.client.ui.Tree;
 import com.google.gwt.user.client.ui.TreeItem;
-import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import com.projects.gwt.client.DbStorageService;
 import com.projects.gwt.client.presenter.ShowNotesPresenter.Display;
@@ -25,36 +24,30 @@ public class AllNotesView extends Composite implements Display {
 	 **/
 	public AllNotesView(){
 		
-		VerticalPanel mainPanel = new VerticalPanel();
+		Grid mainGrid = new Grid(4, 4); 			
 		
 		// Composite method - adds main panel to the whole composition.
-		initWidget(mainPanel);			
+		initWidget(mainGrid);						
 		
-		// Create a Dock Panel
-	    DockPanel dock = new DockPanel();	    
-	    dock.setSpacing(5);
-	    dock.setHorizontalAlignment(DockPanel.ALIGN_CENTER);
-
 		// Other layout definitions.
 		Tree notesTree = new Tree();								
 		
 		// Tree items.
-		TreeItem rootTreeItem = new TreeItem();		
-		rootTreeItem.setText("My shopping list");
-		rootTreeItem.setTitle("My shopping list");	
+		TreeItem rootItem = new TreeItem();		
+		rootItem.setText("My shopping list");
+		rootItem.setTitle("My shopping list");				
 		
 		for (Note note : dbStorageService.getAllNotes()) {			
 			TreeItem subItem = new TreeItem();
 			subItem.setText(note.getTitle());			
-			rootTreeItem.addItem(subItem);			
+			rootItem.addItem(subItem);			
 		}		
 		
-		notesTree.addItem(rootTreeItem);		
+		notesTree.addItem(rootItem);
+		notesTree.addItem(rootItem);
 		
-		dock.add(notesTree, DockPanel.EAST);
-		dock.add(addNoteButton, DockPanel.SOUTH);		
-		
-		mainPanel.add(dock);					
+		mainGrid.setWidget(0, 0, notesTree);
+		mainGrid.setWidget(0, 1, addNoteButton);		
 	}
 	
 	/**

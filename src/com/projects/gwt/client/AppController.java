@@ -30,7 +30,6 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private final static String ADD_NOTE = "addNote";
 	private final static String SAVE_NOTE = "saveNote";
 	
-
 	/**
 	 * Constructor.
 	 **/
@@ -110,12 +109,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			
 			@Override
 			public void onSaveNote(SaveNoteEvent saveEvent) {
-				doSaveNote();				
+				doSaveNote();
 			}
 		});	
 	}
 	
-	// Adding items to history.
+	// Adding items to application history.
 	
 	private void doAddNote(){
 		History.newItem(ADD_NOTE);

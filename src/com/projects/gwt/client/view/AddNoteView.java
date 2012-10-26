@@ -1,6 +1,5 @@
 package com.projects.gwt.client.view;
 
-
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.*;
 import com.projects.gwt.client.presenter.AddNotePresenter.Display;
@@ -19,19 +18,19 @@ public class AddNoteView extends Composite implements Display {
 	 * Constructor.
 	 **/
 	public AddNoteView() {
-				 
-		VerticalPanel mainPanel = new VerticalPanel();
-		initWidget(mainPanel);					
+		
+		FlexTable mainTable = new FlexTable();
+		mainTable.getFlexCellFormatter().setColSpan(1, 0, 3);		
+		initWidget(mainTable);					
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.add(saveNoteButton);
-		horizontalPanel.add(showAllNotesButton);
+		horizontalPanel.add(showAllNotesButton);		
 		
-		mainPanel.add(inputLabel);
-		mainPanel.add(input);
-		mainPanel.add(horizontalPanel);		
-		
-		mainPanel.add(showAllNotesButton);
+		mainTable.setWidget(0, 0, inputLabel);
+		mainTable.setWidget(0, 1, input);
+				
+		mainTable.setWidget(1, 0, horizontalPanel);				
 	}
 	
 	/**
