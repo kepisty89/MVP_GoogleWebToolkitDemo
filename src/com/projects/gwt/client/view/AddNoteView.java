@@ -21,6 +21,7 @@ public class AddNoteView extends Composite implements Display {
 		
 		FlexTable mainTable = new FlexTable();
 		mainTable.getFlexCellFormatter().setColSpan(1, 0, 3);		
+
 		initWidget(mainTable);					
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
