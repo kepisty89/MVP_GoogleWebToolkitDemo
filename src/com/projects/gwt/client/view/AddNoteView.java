@@ -1,8 +1,10 @@
 package com.projects.gwt.client.view;
 
+
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.*;
 import com.projects.gwt.client.presenter.AddNotePresenter.Display;
+import com.projects.gwt.shared.model.Note;
 
 public class AddNoteView extends Composite implements Display {
 
@@ -10,7 +12,7 @@ public class AddNoteView extends Composite implements Display {
 	 * Fields.
 	 **/
 	private final Button showAllNotesButton = new Button("Show all notes");
-	private final Button saveNoteButton = new Button("Save");
+	private final Button saveNoteButton = new Button("Save note");
 	private final Label inputLabel = new Label("Please type title:");
 	private final TextBox input = new TextBox();
 	
@@ -18,20 +20,19 @@ public class AddNoteView extends Composite implements Display {
 	 * Constructor.
 	 **/
 	public AddNoteView() {
-		
-		FlexTable mainTable = new FlexTable();
-		mainTable.getFlexCellFormatter().setColSpan(1, 0, 3);		
-
-		initWidget(mainTable);					
+				 
+		VerticalPanel mainPanel = new VerticalPanel();
+		initWidget(mainPanel);					
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
 		horizontalPanel.add(saveNoteButton);
-		horizontalPanel.add(showAllNotesButton);		
+		horizontalPanel.add(showAllNotesButton);
 		
-		mainTable.setWidget(0, 0, inputLabel);
-		mainTable.setWidget(0, 1, input);
-				
-		mainTable.setWidget(1, 0, horizontalPanel);				
+		mainPanel.add(inputLabel);
+		mainPanel.add(input);
+		mainPanel.add(horizontalPanel);		
+		
+		mainPanel.add(showAllNotesButton);
 	}
 	
 	/**
@@ -44,8 +45,17 @@ public class AddNoteView extends Composite implements Display {
 	
 	@Override
 	public HasClickHandlers getSaveNoteButton() {
-		return this.showAllNotesButton;
-	}	
+		return this.saveNoteButton;
+	}
+	
+	@Override
+	public Note getNoteData(){
+		
+		Note noteToAdd = new Note();
+		noteToAdd.setTitle(this.input.getText());
+		
+		return noteToAdd;
+	}
 	
 	// This is probably not needed (same as super method).
 	@Override

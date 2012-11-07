@@ -12,8 +12,7 @@ public class DbStorageService {
 	
 	private static List<Note> dataBase = new ArrayList<Note>();	
 	
-	public DbStorageService(){
-		setData();
+	public DbStorageService(){		
 	}
 	
 	public void addNote(Note note){				
@@ -29,7 +28,7 @@ public class DbStorageService {
 		return DbStorageService.dataBase;
 	}
 	
-	private void setData() {		
+	public void setData() {		
 		
 		List<String> data = new ArrayList<String>();
 		

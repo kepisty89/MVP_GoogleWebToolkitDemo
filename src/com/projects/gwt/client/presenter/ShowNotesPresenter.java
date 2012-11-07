@@ -2,7 +2,10 @@ package com.projects.gwt.client.presenter;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.FocusEvent;
+import com.google.gwt.event.dom.client.FocusHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.dom.client.HasFocusHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
@@ -39,16 +42,18 @@ public class ShowNotesPresenter implements Presenter {
 	 */
 	public interface Display {
 		HasClickHandlers getAddNoteButton();
-		Widget asWidget();		
+		Widget asWidget();
+		HasFocusHandlers getNotesTree();
+		String GetFocusedNote();
 	}
 
 	/**  
 	 * Public methods.
 	 */
 	@Override
-	public void go(HasWidgets container) {
-		bind();
+	public void go(HasWidgets container) {		
 		
+		bind();		
 		container.clear();
 		container.add(display.asWidget());
 	}
@@ -66,7 +71,23 @@ public class ShowNotesPresenter implements Presenter {
 			}
 		};
 		
-		display.getAddNoteButton().addClickHandler(addNoteClickHandler);
+		FocusHandler noteFocusHandler = new FocusHandler() {											
+			
+			@Override
+			public void onFocus(FocusEvent event) {
+							
+				String title = "NaN";
+				
+				if(display.GetFocusedNote() != null){	
+					title = display.GetFocusedNote();
+					localEventBus.fireEvent(new NotePopupEvent(title));
+				}				
+			}
+			
+		};
+		
+		display.getAddNoteButton().addClickHandler(addNoteClickHandler);	
+		display.getNotesTree().addFocusHandler(noteFocusHandler);
 	}
 
 }

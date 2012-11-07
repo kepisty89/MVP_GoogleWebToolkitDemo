@@ -42,6 +42,7 @@ public class AddNotePresenter implements Presenter {
 		HasClickHandlers getShowNotesButton();
 		HasClickHandlers getSaveNoteButton();
 		Widget asWidget();
+		Note getNoteData();		
 	}
 
 	/**  
@@ -57,7 +58,7 @@ public class AddNotePresenter implements Presenter {
 	/**
 	 * Private methods.
 	 **/	
-	private void bind(){
+	private void bind(){			
 		
 		// TODO: Replace with ClickHandler factory.
 		ClickHandler showNotesClickHandler = new ClickHandler() {		
@@ -66,19 +67,18 @@ public class AddNotePresenter implements Presenter {
 				localEventBus.fireEvent(new ShowNotesEvent());		
 			}			
 		};
-		
-		// TODO: Replace with ClickHandler factory.
-		ClickHandler saveNoteClickHandler = new ClickHandler() {		
+				
+		ClickHandler saveNoteClickHandler = new ClickHandler() {								
 			@Override
-			public void onClick(ClickEvent event) {
-				Note note = new Note();
-				note.setTitle("new note");				
-				storage.addNote(note);
-				localEventBus.fireEvent(new SaveNoteEvent());		
+			public void onClick(ClickEvent event) {				
+				// Set data from display input.		
+				Note noteToAdd = display.getNoteData();
+				
+				localEventBus.fireEvent(new SaveNoteEvent(noteToAdd));		
 			}			
 		};
-		
+			
 		display.getShowNotesButton().addClickHandler(showNotesClickHandler);
-		display.getSaveNoteButton().addClickHandler(saveNoteClickHandler);
+		display.getSaveNoteButton().addClickHandler(saveNoteClickHandler);			
 	}
 }

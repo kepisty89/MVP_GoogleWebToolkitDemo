@@ -3,7 +3,7 @@ package com.projects.gwt.client.event;
 import com.google.gwt.event.shared.GwtEvent;
 
 public class AddNoteEvent extends GwtEvent<AddNoteEventHandler>{
-
+		
 	public static Type<AddNoteEventHandler> TYPE = new Type<AddNoteEventHandler>();
 		
 	@Override
@@ -13,6 +13,7 @@ public class AddNoteEvent extends GwtEvent<AddNoteEventHandler>{
 
 	@Override
 	protected void dispatch(AddNoteEventHandler handler) {
-		handler.onAddNote(this);
-	}	
+		handler.onAddNote(this);		
+	}
+	
 }

@@ -30,17 +30,18 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private final static String ADD_NOTE = "addNote";
 	private final static String SAVE_NOTE = "saveNote";
 	
+
 	/**
 	 * Constructor.
 	 **/
 	public AppController(DbStorageService storage, HandlerManager eventBus) {
 		
 		this.eventBus = eventBus;
-		this.dbStorage = storage;		
+		this.dbStorage = storage;
 		
 		this.bind();
 	}
-
+   
 	/**
 	 * Public methods.
 	 **/
@@ -66,7 +67,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			
 			Presenter presenter = null;
 			
-			if (token.equals(SHOW_NOTES) || token.equals(SAVE_NOTE)) 
+			if (token.equals(SHOW_NOTES)) 
 			{			
 				presenter = new ShowNotesPresenter(eventBus, dbStorage, new AllNotesView());			
 			} 
@@ -74,7 +75,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			{
 				presenter = new AddNotePresenter(eventBus, dbStorage, new AddNoteView());
 			}
+			else if (token.equals(SAVE_NOTE))
+			{
+				presenter = new ShowNotesPresenter(eventBus, dbStorage, new AllNotesView());
+			}
 			
+			// If presenter is set execute go() method.
 			if(presenter != null) {
 				presenter.go(container);
 			}
@@ -87,6 +93,10 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	// Create and bind event handlers to the event bus.
 	private void bind() {
 		
+		DbStorageService dbStorageService = new DbStorageService();
+		dbStorageService.setData();
+		
+		// Bind this object with onValueChange method with history object.
 		History.addValueChangeHandler(this);
 		
 		eventBus.addHandler(AddNoteEvent.TYPE, new AddNoteEventHandler() {
@@ -109,13 +119,12 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			
 			@Override
 			public void onSaveNote(SaveNoteEvent saveEvent) {
-				doSaveNote();
+				doSaveNote();				
 			}
 		});	
 	}
 	
-	// Adding items to application history.
-	
+	// Adding history entries.	
 	private void doAddNote(){
 		History.newItem(ADD_NOTE);
 	}
